@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponseTrait;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -19,7 +22,7 @@ class ProductController extends Controller
         try {
             $products = Product::get();
             if (!$products->isEmpty()){
-                return $this->successResponse($products, 'Products retrieved successfully.');
+                return $this->successResponse(ProductResource::collection($products), 'Products retrieved successfully.');
             }else{
                 return $this->errorResponse(null, 'Products retrieved successfully.');
             }
@@ -39,7 +42,7 @@ class ProductController extends Controller
         try {
             $product = Product::find($id);
             if($product){
-                return $this->successResponse($product, 'Products retrieved successfully.');
+                return $this->successResponse(new ProductResource($product), 'Products retrieved successfully.');
             }else{
                 return $this->errorResponse(null, 'There is no product following your Request.');
             }
@@ -82,7 +85,7 @@ class ProductController extends Controller
             ]);
 
             // Return a success response with the created product
-            return $this->modifyResponse($product, 'Product created successfully');
+            return $this->modifyResponse(new ProductResource($product), 'Product created successfully');
 
         } catch (\Exception $e) {
             return $this->serveErrorResponse();
@@ -113,7 +116,7 @@ class ProductController extends Controller
                     return $this->invalidResponse([], 'No products found for this category.');
 
                 } else {
-                    return $this->successResponse($items, 'Products retrieved successfully.');
+                    return $this->successResponse(ProductResource::collection($items), 'Products retrieved successfully.');
                 }
             }else{
                 return $this->errorResponse(null, 'The category is not Found.');
@@ -167,7 +170,7 @@ class ProductController extends Controller
             ]);
 
             // Return a success response with the updated product
-            return $this->modifyResponse($product, 'Product updated successfully.');
+            return $this->modifyResponse(new ProductResource($product), 'Product updated successfully.');
 
         } catch (\Exception $e) {
             // Handle any errors

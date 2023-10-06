@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
          ]);
 
 //        User::factory()->create([
-//            'activated' => 1,
 //            'name' => 'morty',
 //            'email' => 'admin@morty.net',
 //            'password' =>Hash::make('00225588'),

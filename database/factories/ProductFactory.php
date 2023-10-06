@@ -21,8 +21,8 @@ class ProductFactory extends Factory
             'name' => fake()->name,
             'karat' => random_int(10,30),
             'category' => random_int(1,4),
-            'closed_image' => fake()->text(50) ,
-            'far_image' => fake()->text(50),
+            'closed_image' => fake()->imageUrl ,
+            'far_image' => fake()->imageUrl,
             'price' => random_int(50,200),
         ];
     }

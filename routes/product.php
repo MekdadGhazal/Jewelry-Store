@@ -1,9 +1,6 @@
 <?php
 
 //use App\Http\Controllers\AuthController;
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\ProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,11 +26,11 @@ use Illuminate\Support\Facades\Route;
 Route::group([
 
 ],function (){
-    Route::get('/' ,'\App\Http\Controllers\ProductController@index');
-    Route::post('/' ,'\App\Http\Controllers\ProductController@create');
-    Route::post('/update' ,'\App\Http\Controllers\ProductController@update');
-    Route::delete('/destroy/{id}' ,'\App\Http\Controllers\ProductController@destroy');
-    Route::get('/show/{id}' ,'\App\Http\Controllers\ProductController@show');
-    Route::get('/{id}/show' ,'\App\Http\Controllers\ProductController@getCategory');
-    Route::get('/{id}' ,'\App\Http\Controllers\ProductController@getProduct');
+    Route::get('/' ,'\App\Http\Controllers\Product\ProductController@index');
+    Route::post('/' ,'\App\Http\Controllers\Product\ProductController@create');
+    Route::post('/update' ,'\App\Http\Controllers\Product\ProductController@update');
+    Route::delete('/destroy/{id}' ,'\App\Http\Controllers\Product\ProductController@destroy');
+    Route::get('/show/{id}' ,'\App\Http\Controllers\Product\ProductController@show');
+    Route::get('/{id}/show' ,'\App\Http\Controllers\Product\ProductController@getCategory');
+    Route::get('/{id}' ,'\App\Http\Controllers\Product\ProductController@getProduct');
 });
