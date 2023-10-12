@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /**
- *  All Route Here Start with [api/product]
+ *  All Route Here Start with [api/category]
  *
  *  changed in:
  *      1. \App\Providers\RouteServiceProvider
@@ -23,8 +23,12 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group([
+    'middleware' => 'auth:api',
 
 ],function (){
     Route::get('/' , '\App\Http\Controllers\CategoryController@index');
+    Route::post('/create' , '\App\Http\Controllers\CategoryController@create');
+    Route::post('/update/{id}' , '\App\Http\Controllers\CategoryController@update');
+    Route::delete('/destroy/{id}' , '\App\Http\Controllers\CategoryController@destroy');
 });
 

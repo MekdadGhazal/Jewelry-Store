@@ -30,7 +30,16 @@ trait ResponseTrait
         return $this->jsonResponse($data, $message, Response::HTTP_NOT_FOUND);
     }
 
+    public function unAuthorizedResponse($data = null, $message = 'Error - Unauthorized.'){
+        return $this->jsonResponse($data, $message, Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function unprocessableResponse($data = null, $message = 'An error occurred while checking the Request.'){
+        return $this->jsonResponse($data, $message, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
     public function serveErrorResponse($data = null, $message = 'An error occurred while fetching the Request.'){
         return $this->jsonResponse($data, $message, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+
 }

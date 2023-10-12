@@ -26,11 +26,23 @@ use Illuminate\Support\Facades\Route;
 Route::group([
 
 ],function (){
+//    Route::get('/' ,'\App\Http\Controllers\Product\ProductController@index');
+//    Route::post('/' ,'\App\Http\Controllers\Product\ProductController@create');
+//    Route::post('/update' ,'\App\Http\Controllers\Product\ProductController@update');
+//    Route::delete('/destroy/{id}' ,'\App\Http\Controllers\Product\ProductController@destroy');
+    Route::get('/show/{id}' ,'\App\Http\Controllers\Product\ProductController@show');
+    Route::get('/{id}/show' ,'\App\Http\Controllers\Product\ProductController@getCategory');
+    Route::get('/{id}' ,'\App\Http\Controllers\Product\ProductController@getProduct');
+});
+
+Route::group([
+
+],function (){
     Route::get('/' ,'\App\Http\Controllers\Product\ProductController@index');
     Route::post('/' ,'\App\Http\Controllers\Product\ProductController@create');
     Route::post('/update' ,'\App\Http\Controllers\Product\ProductController@update');
     Route::delete('/destroy/{id}' ,'\App\Http\Controllers\Product\ProductController@destroy');
-    Route::get('/show/{id}' ,'\App\Http\Controllers\Product\ProductController@show');
-    Route::get('/{id}/show' ,'\App\Http\Controllers\Product\ProductController@getCategory');
-    Route::get('/{id}' ,'\App\Http\Controllers\Product\ProductController@getProduct');
+//    Route::get('/show/{id}' ,'\App\Http\Controllers\Product\ProductController@show');
+//    Route::get('/{id}/show' ,'\App\Http\Controllers\Product\ProductController@getCategory');
+//    Route::get('/{id}' ,'\App\Http\Controllers\Product\ProductController@getProduct');
 });

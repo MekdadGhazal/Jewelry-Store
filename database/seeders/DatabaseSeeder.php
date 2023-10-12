@@ -35,13 +35,19 @@ class DatabaseSeeder extends Seeder
              'name'=>'Ring',
          ]);
 
-//        User::factory()->create([
-//            'name' => 'morty',
-//            'email' => 'admin@morty.net',
-//            'password' =>Hash::make('00225588'),
-//        ]);
+        User::factory()->create([
+            'name' => 'morty',
+            'email' => 'admin@morty.net',
+            'password' =>Hash::make('00225588'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'omar',
+            'email' => 'admin@omar.net',
+            'password' =>Hash::make('12345678'),
+        ]);
 
 
-        \App\Models\Product::factory(50)->create();
+        \App\Models\Product::factory(20)->create();
     }
 }

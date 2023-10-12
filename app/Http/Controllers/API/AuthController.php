@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    use ResponseTrait;
     /**
      * Create a new AuthController instance.
      *
@@ -29,13 +32,14 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return $this->unprocessableResponse($validator->errors());
         }
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return $this->unAuthorizedResponse();
         }
         return $this->createNewToken($token);
     }
+
     /**
      * Register a User.
      *
@@ -82,25 +86,26 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function userProfile() {
-        return response()->json(auth()->user());
-    }
+//    public function userProfile() {
+//        return response()->json(auth()->user());
+//    }
+
+//-------------------------------------------
     /**
      * Get the token array structure.
-     *
      * @param  string $token
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     protected function createNewToken($token){
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
+        return $this->successResponse([
+            'token' => $token,
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user(),
         ]);
     }
 
+
+/**
     public function destroy($id){
 
         if(User::find($id)) {
@@ -111,4 +116,6 @@ class AuthController extends Controller
             return response()->json('no' , '404');
         }
     }
+ */
+
 }

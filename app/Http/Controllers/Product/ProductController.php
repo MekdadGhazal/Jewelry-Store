@@ -61,7 +61,7 @@ class ProductController extends Controller
         try{
             // Validate the request data
             $validatedData = $request->validate([
-                'name' => 'required|string',
+//                'name' => 'required|string',
                 'karat' => 'required|integer',
                 'category' => 'required|exists:categories,id',
                 'closed_image' => 'required|image',
@@ -76,7 +76,7 @@ class ProductController extends Controller
 
             // Create a new product using the validated data
             $product = Product::create([
-                'name' => $validatedData['name'],
+//                'name' => $validatedData['name'],
                 'karat' => $validatedData['karat'],
                 'category' => $validatedData['category'],
                 'closed_image' => 'images/'. $closedImage,
@@ -146,7 +146,7 @@ class ProductController extends Controller
 
             // Validate the request data
             $validatedData = $request->validate([
-                'name' => 'required|string',
+//                'name' => 'required|string',
                 'karat' => 'required|integer',
                 'category' => 'required|exists:categories,id',
                 'closed_image' => 'required|image',
@@ -161,7 +161,7 @@ class ProductController extends Controller
 
             // Update the product using the validated data
             $product->update([
-                'name' => $validatedData['name'],
+//                'name' => $validatedData['name'],
                 'karat' => $validatedData['karat'],
                 'category' => $validatedData['category'],
                 'closed_image' => 'images/'. $closedImage,
@@ -219,7 +219,7 @@ class ProductController extends Controller
         try {
             $product = Product::find($id);
             if($product){
-                return $this->successResponse($product->category, 'Products retrieved successfully.');
+                return $this->successResponse($product->getCategory, 'Products retrieved successfully.');
             }else{
                 return $this->errorResponse(null, 'There is no product following your Request.');
             }
