@@ -21,28 +21,24 @@ use Illuminate\Support\Facades\Route;
  *      1. \App\Providers\RouteServiceProvider
  *      2. \config\auth.php
  */
-//Route::get('/' ,[ProductController::class,'index']);
-
-Route::group([
-
-],function (){
-//    Route::get('/' ,'\App\Http\Controllers\Product\ProductController@index');
-//    Route::post('/' ,'\App\Http\Controllers\Product\ProductController@create');
-//    Route::post('/update' ,'\App\Http\Controllers\Product\ProductController@update');
-//    Route::delete('/destroy/{id}' ,'\App\Http\Controllers\Product\ProductController@destroy');
-    Route::get('/show/{id}' ,'\App\Http\Controllers\Product\ProductController@show');
-    Route::get('/{id}/show' ,'\App\Http\Controllers\Product\ProductController@getCategory');
-    Route::get('/{id}' ,'\App\Http\Controllers\Product\ProductController@getProduct');
-});
 
 Route::group([
 
 ],function (){
     Route::get('/' ,'\App\Http\Controllers\Product\ProductController@index');
+    Route::get('/show/{id}' ,'\App\Http\Controllers\Product\ProductController@show');
+    Route::get('/{id}/show' ,'\App\Http\Controllers\Product\ProductController@getCategory');
+    Route::get('/{id}' ,'\App\Http\Controllers\Product\ProductController@getProduct');
+});
+
+/**
+ *  All Routes below need Authentication
+ */
+
+Route::group([
+//    'middleware' => 'auth:api',
+],function (){
     Route::post('/' ,'\App\Http\Controllers\Product\ProductController@create');
     Route::post('/update' ,'\App\Http\Controllers\Product\ProductController@update');
     Route::delete('/destroy/{id}' ,'\App\Http\Controllers\Product\ProductController@destroy');
-//    Route::get('/show/{id}' ,'\App\Http\Controllers\Product\ProductController@show');
-//    Route::get('/{id}/show' ,'\App\Http\Controllers\Product\ProductController@getCategory');
-//    Route::get('/{id}' ,'\App\Http\Controllers\Product\ProductController@getProduct');
 });

@@ -1,13 +1,14 @@
 <?php
 
-//use App\Http\Controllers\AuthController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CountryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
+| all API here start with [api]
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -25,7 +26,7 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [\App\Http\Controllers\CustomerController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
@@ -34,3 +35,7 @@ Route::group([
 //Route::get('/user', [AuthController::class, 'userProfile'])->middleware(['active','api']);
 //Route::post('/delete/{id}' ,[AuthController::class, 'destroy']);
 
+/**
+ *  Countries
+ */
+Route::get('/loc', [CountryController::class, 'index']);
