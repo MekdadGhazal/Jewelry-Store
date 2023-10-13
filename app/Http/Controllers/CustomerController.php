@@ -3,21 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CustomerResource;
+use App\Mail\PurchaseMail;
 use App\Models\Customer;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
     use ResponseTrait;
 
+    public function sendPurchaseMail()
+    {
+        Mail::to('wessam.1066@gmail.com')->send(new PurchaseMail());
+        return 'Email sent successfully';
+    }
+
+
     public function register(Request $request) {
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|between:2,100',
                 'email' => 'required|string|email|max:100|unique:users',
-                'password' => 'required|string|min:6',
                 'phone' => 'required|string|between:2,15',
                 'card' => 'required|string|between:10,100',
                 'country' => 'required|exists:countries,id',
@@ -28,13 +37,9 @@ class CustomerController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
-            $user = User::create([
+            $customer = Customer::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
-                'password' => bcrypt($request->input('password')),
-            ]);
-            $customer = Customer::create([
-                'user_id' => $user->id,
                 'phone' => $request->input('phone'),
                 'card' => $request->input('card'),
                 'country' => $request->input('country'),
@@ -42,14 +47,18 @@ class CustomerController extends Controller
                 'street' => $request->input('street'),
             ]);
 
-            $data = [
-                'user' => $user ,
-                'info' => $customer
-            ];
-
-            return $this->successResponse(new CustomerResource($data),'User successfully registered');
+            return $this->successResponse(new CustomerResource($customer),'User successfully registered');
         } catch (\Exception $exception){
             return  $exception->getMessage();
         }
+    }
+
+    public function prushes(Request $request){
+        Event::create([
+            'user_id' => 1,
+            'order_number' => 3,
+            'card' => 2,
+            'status' => 1
+        ]);
     }
 }

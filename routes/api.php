@@ -39,3 +39,4 @@ Route::group([
  *  Countries
  */
 Route::get('/loc', [CountryController::class, 'index']);
+Route::get('/send', [\App\Http\Controllers\CustomerController::class, 'sendPurchaseMail']);
