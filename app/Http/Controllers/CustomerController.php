@@ -6,6 +6,7 @@ use App\Http\Resources\CustomerResource;
 use App\Mail\PurchaseMail;
 use App\Models\Customer;
 use App\Models\Event;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -15,14 +16,14 @@ class CustomerController extends Controller
 {
     use ResponseTrait;
 
-    public function sendPurchaseMail()
+    public function sendPurchaseMail($user, $list, $id)
     {
-        Mail::to('wessam.1066@gmail.com')->send(new PurchaseMail());
+        Mail::to($user->email)->send(new PurchaseMail($user, $list, $id));
         return 'Email sent successfully';
     }
 
 
-    public function register(Request $request) {
+    public function purchaseProcess(Request $request) {
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|between:2,100',
@@ -35,7 +36,25 @@ class CustomerController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
+                return $this->invalidResponse($validator->errors());
+            }
+
+            $list = [];
+            $missedProducts = [];
+            foreach ($request->products as $product) {
+                $productDB = Product::find($product['id']);
+                if ($productDB->count >= $product['count']) {
+                    $productDB->update([
+                        'count' => $productDB->count - $product['count'],
+                    ]);
+                    $list[] = [
+                        'id' => $product['id'],
+                        'price' => $productDB->price,
+                        'count' => $product['count']
+                    ];
+                } else {
+                    $missedProducts[] = $productDB;
+                }
             }
             $customer = Customer::create([
                 'name' => $request->input('name'),
@@ -47,18 +66,27 @@ class CustomerController extends Controller
                 'street' => $request->input('street'),
             ]);
 
-            return $this->successResponse(new CustomerResource($customer),'User successfully registered');
+            $process = $this->purchase($request, $customer->id);
+            $this->sendPurchaseMail($customer, $list , $process->order_number);
+
+            $data = [
+                'customer' => new CustomerResource($customer),
+                'missedProducts' => $missedProducts
+            ];
+            return $this->successResponse($data,'The purchase process successfully Done.');
+
         } catch (\Exception $exception){
             return  $exception->getMessage();
         }
     }
 
-    public function prushes(Request $request){
-        Event::create([
-            'user_id' => 1,
-            'order_number' => 3,
-            'card' => 2,
-            'status' => 1
+    public function purchase(Request $request, $id)
+    {
+        $event = Event::create([
+            'user_id' => $id,
+            'card' => $request->card,
+            'status' => 0,
         ]);
+        return $event;
     }
 }

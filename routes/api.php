@@ -26,10 +26,11 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [\App\Http\Controllers\CustomerController::class, 'register']);
+    Route::get('/info', [AuthController::class, 'getData']);
+    Route::post('/update', [AuthController::class, 'updateData']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+//    Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
 //
 //Route::get('/user', [AuthController::class, 'userProfile'])->middleware(['active','api']);
@@ -39,4 +40,10 @@ Route::group([
  *  Countries
  */
 Route::get('/loc', [CountryController::class, 'index']);
-Route::get('/send', [\App\Http\Controllers\CustomerController::class, 'sendPurchaseMail']);
+//Route::get('/send', [\App\Http\Controllers\CustomerController::class, 'sendPurchaseMail']);
+
+/**
+ *  Purchase Process
+ */
+
+Route::post('/purchase', [\App\Http\Controllers\CustomerController::class, 'purchaseProcess']);

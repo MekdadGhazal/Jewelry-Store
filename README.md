@@ -64,3 +64,76 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Running a Laravel Project
+
+To run a Jewelry Store project after installing it, follow these steps:
+
+<ol>
+<li><strong>Install Dependencies:</strong></li>
+
+<p>Make sure you have PHP and Composer installed on your system.</p>
+
+<p>Open a terminal or command prompt and navigate to the project's root directory.</p>
+
+<pre><code>composer install</code></pre>
+
+
+<li><strong>Environment Configuration:</strong></li>
+
+<p>In the project's root directory, locate the <code>.env.example</code> file and make a copy of it.</p>
+
+<p>Rename the copied file to <code>.env</code>.</p>
+
+<p>Open the <code>.env</code> file in a text editor and set the necessary configuration options, such as database credentials.</p>
+
+<li><strong>Generate Application Key:</strong></li>
+
+<p>Laravel requires an application key for encryption and other security purposes.</p>
+
+<p>In the terminal, run the following command to generate the application key:</p>
+
+<pre><code>php artisan key:generate</code></pre>
+
+<p>then: </p>
+
+<pre><code>php artisan jwt:secret</code></pre>
+
+
+<li><strong>Database Setup:</strong></li>
+
+<p>Create a new database on your preferred database server.</p>
+
+<p>Open the <code>.env</code> file and update the <code>DB_*</code> configuration options to match your database settings.</p>
+
+<p>by default the Database is: <code>jewelry_store</code></p>
+
+<li><strong>Run Migrations:</strong></li>
+
+<p>Laravel uses database migrations to manage database schema changes.</p>
+
+<p>In the terminal, run the following command to run the migrations and create the necessary tables in the database:</p>
+
+<pre><code>php artisan migrate</code></pre>
+
+
+<li><strong>Serve the Application:</strong></li>
+
+<p>In the terminal, run the following command to start the server:</p>
+
+<pre><code>php artisan serve</code></pre>
+
+<p>By default, the application will be accessible at <a href="http://localhost:8000">http://localhost:8000</a>. You can access it using your preferred web browser.</p>
+
+<li><strong>Additional Configuration (if required):</strong></li>
+
+<p>For testing Data use the following commands:</p>
+
+<pre><code>php artisan db:seed</code></pre>
+
+<pre><code>php artisan db:seed --class=CountrySeeder</code></pre>
+
+<p>Check the project's documentation or README file for any additional instructions.</p>
+
+<p>That's it! Your <strong>Jewelry Store</strong> should now be up and running. You can access it in your web browser and start exploring its functionality.</p>
+</ol>

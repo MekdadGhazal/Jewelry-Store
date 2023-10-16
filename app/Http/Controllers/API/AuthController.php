@@ -117,5 +117,35 @@ class AuthController extends Controller
         }
     }
  */
+    public function getData(Request $request){
+        try{
+            return $this->successResponse(User::find($request->id));
+        }catch (\Exception $e){
+            return $e;
+        }
+    }
+    public function updateData(Request $request){
+        try {
+            $user = User::find($request->id);
 
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|between:2,100',
+                'email' => 'required|string|email|max:100|unique:users,email,'.$user->id,
+                'password' => 'required|string|min:6',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->invalidResponse($validator->errors());
+            }
+
+            $user->update(array_merge(
+                $validator->validated(),
+                ['password' => bcrypt($request->password)]
+            ));
+
+            return $this->modifyResponse($user, 'User successfully updated');
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
 }

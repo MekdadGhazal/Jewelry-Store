@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +22,7 @@ class CustomerResource extends JsonResource
             'phone' =>  $this->phone,
             'card' =>  $this->card,
             'address' =>[
-                'country' =>  $this->country,
+                'country' =>  Country::find($this->country)->name,
                 'city' =>  $this->city,
                 'street' =>  $this->street,
             ],

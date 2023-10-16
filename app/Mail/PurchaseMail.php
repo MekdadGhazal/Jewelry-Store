@@ -13,12 +13,17 @@ class PurchaseMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $user;
+    protected $list;
+    protected $id;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($user, $list, $id)
     {
-        //
+        $this->user = $user;
+        $this->id = $id;
+        $this->list = $list;
     }
 
     /**
@@ -30,7 +35,9 @@ class PurchaseMail extends Mailable
             ->view('emails.test')
             ->subject('Test Email')
             ->with([
-                'data' => 'Some additional data',
+                'user' => $this->user,
+                'list' => $this->list,
+                'id' => $this->id,
             ]);
     }
 
