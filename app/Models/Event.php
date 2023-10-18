@@ -11,6 +11,10 @@ class Event extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $casts = [
+        'order_number' => 'hashed',
+    ];
+
     public static function booted()
     {
         static::creating(function ($event) {

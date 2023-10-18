@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
+use App\Http\Resources\EventResource;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -146,6 +148,14 @@ class AuthController extends Controller
             return $this->modifyResponse($user, 'User successfully updated');
         } catch (\Exception $e) {
             return $e;
+        }
+    }
+
+    public function getEvents(){
+        try{
+            return EventResource::collection(Event::get());
+        }catch (\Exception $exception){
+            return $exception;
         }
     }
 }

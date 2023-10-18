@@ -47,3 +47,5 @@ Route::get('/loc', [CountryController::class, 'index']);
  */
 
 Route::post('/purchase', [\App\Http\Controllers\CustomerController::class, 'purchaseProcess']);
+
+Route::get('/events', [AuthController::class, 'getEvents']);

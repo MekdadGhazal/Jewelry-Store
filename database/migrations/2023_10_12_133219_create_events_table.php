@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('order_number');
+            $table->string('order_number', 255);
             $table->foreignId('user_id')->constrained('customers')->index();
             $table->string('card', 100);
             $table->boolean('status')->default(false);
